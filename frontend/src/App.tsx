@@ -1,9 +1,47 @@
-function App() {
-  return (
-    <>
-      <h1 className=" bg-red-200">eai planeta</h1>
-    </>
-  )
-}
+// Importação do React e React Router DOM.
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-export default App
+// componentes das páginas.
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+
+// Importação do componente de rota protegida.
+import ProtectedRoute from "./pages/ProtectedRouter";
+
+// Definição do componente AppRouter como uma função componente do React.
+const AppRouter: React.FC = () => (
+  // Utilização do BrowserRouter para envolver as rotas da aplicação.
+  <Router>
+    {/* Definição das rotas utilizando o componente Routes. */}
+    <Routes>
+      {/* Rota para a página de login. */}
+      <Route path="/login" element={<Login />} />
+      {/* Rota para a página de registro. */}
+      <Route path="/register" element={<Register />} />
+      {/* Rota protegida para o dashboard do usuário. */}
+      <Route
+        path="/user-dashboard"
+        element={
+          <ProtectedRoute>
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
+      {/* Rota protegida para o dashboard do administrador. */}
+      <Route
+        path="/admin-dashboard"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  </Router>
+);
+
+// Exportação do componente AppRouter para ser utilizado em outras partes da aplicação.
+export default AppRouter;
