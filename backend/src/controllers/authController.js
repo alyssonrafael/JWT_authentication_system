@@ -40,7 +40,7 @@ const login = async (req, res) => {
             // Geração do token JWT com o ID do usuário e seu papel, válido por 1 hora
             const token = jwt.sign({userId: user.id, role: user.role }, secretKey, { expiresIn: '1h' });
             // Resposta com o token gerado
-            res.json({ token })
+            res.json({ token, role: user.role })
         } else {
             //resposta sse as credenciais estiverem incorretas
             res.status(401).json({ error:'invalid email or password' });
