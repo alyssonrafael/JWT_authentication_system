@@ -1,12 +1,12 @@
 import React, { useState } from "react"; //importaçao hook
 import axios from "axios"; //axios para requisiçao
 import { useNavigate, Link } from "react-router-dom"; //navigate para navegar entre paginas
-import Input from "../components/Input";
-import MensagemCard from "../components/Message";
-import HomeMobile from "./mobile/HomeMobile";
+import { FaArrowLeft } from "react-icons/fa6";
+import MensagemCard from "../../components/Message";
+import Input from "../../components/Input";
 
-//componete funcional de login
-const Login: React.FC = () => {
+function LoginMobile() {
+
   // Criação de estados para armazenar o email e senha do usuário.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,7 +41,7 @@ const Login: React.FC = () => {
         navigate("/user-dashboard");
       }
     } catch (error) {
-      // Caso ocorra um erro na requisição, exibir mensagem de erro para o usuário
+      // mensagem de feedback
       setMensagem({ sucesso: false, texto: "Email ou senha incorretos" });
       setEmail("");
       setPassword("");
@@ -49,34 +49,33 @@ const Login: React.FC = () => {
       //console.error("Erro ao fazer login:", error);
     }
   };
-  // Renderização do formulário de login com campos para email e senha.
   return (
-    <div className="bg-primaria h-screen overflow-hidden">
-      {/* Seção para renderizar o componente HomeMobile em dispositivos pequenos */}
-      <div className="block lg:hidden w-full h-full">
-        <HomeMobile />
-      </div>
-      {/* Seção para renderizar conteúdo para telas maiores */}
-      <div className="hidden lg:flex lg:h-full items-center justify-center">
-        <div className="w-1/2 flex flex-col justify-center h-full">
-          <div className="text-center font-sans lg:text-5xl lg:mb-36">
-            <h1 className="text-5xl">Seja bem-vindo, este é meu</h1>
-            <h1 className="font-bold text-4xl">Sistema de autenticação</h1>
-          </div>
-          <div className="flex justify-center">
-            <img
-              src="/undraw_login_re_4vu2 1.svg"
-              alt="unDraw image"
-              className="px-24"
-            />
-          </div>
+
+    <div className="h-screen bg-primaria text-white flex flex-col">
+      {/* Cabeçalho com ícone de volta e título */}
+      <div className="py-4 h-1/5">
+      <div className="m-4 text-3xl">
+        {/* volta para o / que exibe a home do mobile ou login se tiver em telas grandes */}
+        <Link to="/" className="text-textod">
+          <FaArrowLeft/>
+        </Link>
         </div>
-        <div className="w-1/2 bg-secundaria h-full flex flex-col items-center justify-center">
-          <div className="w-full px-8 md:px-16 text-textow">
-            <h2 className="lg:text-5xl font-bold font-serat">LOGIN</h2>
-            <p className="mt-8 mb-6 lg:text-xl">Faça agora mesmo seu login.</p>
-            {/* Formulário de login */}
-            <form
+        <div className="flex justify-between mx-4 mt-8">
+        <h2 className="text-5xl font-bold text-textod">LOGIN</h2>
+        <img
+          src="/public/Lock.svg"
+          alt="unDraw image"
+          className=""
+        />
+        </div>
+      </div>
+
+      {/* Formulário de Login */}
+      <div className="flex flex-col h-4/5 bg-secundaria rounded-t-[14px] p-4">
+        <div className="flex flex-col">
+          <h1 className="text-2xl font-bold my-8">Seja bem-vindo de volta</h1>
+
+          <form
               onSubmit={handleLogin}
               className="w-full max-w-sm md:max-w-md"
             >
@@ -104,44 +103,32 @@ const Login: React.FC = () => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-primaria text-textod lg:px-4 lg:py-3 rounded relative inline-flex items-center justify-start overflow-hidden transition-all hover:bg-secundaria group"
+                className="w-full bg-primaria text-textod rounded h-10 font-semibold"
               >
-                <span className="w-0 h-0 rounded bg-terciaria absolute top-0 left-0 ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1"></span>
-                <span className="w-full text-black transition-colors duration-300 ease-in-out group-hover:text-white z-10">
                   Login
-                </span>
               </button>
             </form>
-            {/* Links adicionais */}
-            <p className="pt-4 lg:text-xl">
-              É novo por aqui?
-              <Link
-                to="/register"
-                className="text-textod underline pl-3 hover:text-white transition-all duration-300"
-              >
-                Cadastre-se agora.
-              </Link>
-            </p>
 
-            <p className="mt-4 lg:text-xl">
+          <div className="mt-6 ">
+            <p>
               Quer saber mais sobre esse projeto?
               <a
                 href="https://github.com/alyssonrafael/JWT_authentication_system"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-textod underline pl-3 hover:text-white transition-all duration-300"
+                className="text-textow underline pl-1"
               >
-                Clique aqui.
+                Clique aqui
               </a>
             </p>
-            <p className="mt-4">
-              Você pode testar o login com as seguintes credenciais <br />
+            <p className="mt-4 text-sm">
+              Você pode testar o login com as seguintes credenciais: <br />
               Email: user@mail.com <br /> Senha: 123456
             </p>
           </div>
         </div>
       </div>
-      {/* Componente MensagemCard para exibir mensagens de feedback */}
+      {/* componente da mensagem de feedback */}
       <MensagemCard
         sucesso={mensagem.sucesso}
         mensagem={mensagem.texto}
@@ -149,6 +136,6 @@ const Login: React.FC = () => {
       />
     </div>
   );
-};
+}
 
-export default Login;
+export default LoginMobile;

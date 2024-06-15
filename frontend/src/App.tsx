@@ -7,9 +7,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UserDashboard from "./pages/UserDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+import LoginMobile from "./pages/mobile/LoginMobile";
 
 // Importação do componente de rota protegida.
 import ProtectedRoute from "./pages/ProtectedRouter";
+import RegisterMobile from "./pages/mobile/RegisterMobile";
 
 // Definição do componente AppRouter como uma função componente do React.
 const AppRouter: React.FC = () => (
@@ -18,9 +20,13 @@ const AppRouter: React.FC = () => (
     {/* Definição das rotas utilizando o componente Routes. */}
     <Routes>
       {/* Rota para a página de login. */}
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
+      {/* Rota para a página de login mobile. */}
+      <Route path="/login-mobile" element={<LoginMobile />} />
       {/* Rota para a página de registro. */}
       <Route path="/register" element={<Register />} />
+      {/* Rota para a página de registro mobile. */}
+      <Route path="/register-mobile" element={<RegisterMobile />} />
       {/* Rota protegida para o dashboard do usuário. */}
       <Route
         path="/user-dashboard"
