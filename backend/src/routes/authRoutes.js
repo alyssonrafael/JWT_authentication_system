@@ -1,12 +1,13 @@
 const express = require("express");
 const  { register, login } = require("../controllers/authController");
 const authenticateJWT = require("../middlewares/authenticateJWT");
+const checkDuplicateEmail = require('../middlewares/checkDuplicateEmail');
 // Criação de um novo roteador Express
 const router = express.Router();
 
 // Rota POST para registro de usuários
-// Quando a rota '/register' é acessada, a função 'register' é chamada
-router.post("/register", register);
+// Quando a rota '/register' é acessada, a função 'register' é chamada e passa pelo middleware
+router.post("/register",checkDuplicateEmail, register);
 
 // Rota POST para login de usuários
 // Quando a rota '/login' é acessada, a função 'login' é chamada
