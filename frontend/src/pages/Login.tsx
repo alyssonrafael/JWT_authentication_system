@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom"; //navigate para navegar en
 import Input from "../components/Input";
 import MensagemCard from "../components/Message";
 import HomeMobile from "./mobile/HomeMobile";
+import BannerInicial from "../components/layout/BannerInicial";
 
 //componete funcional de login
 const Login: React.FC = () => {
@@ -58,19 +59,13 @@ const Login: React.FC = () => {
       </div>
       {/* Seção para renderizar conteúdo para telas maiores */}
       <div className="hidden lg:flex lg:h-full items-center justify-center">
-        <div className="w-1/2 flex flex-col justify-center h-full">
-          <div className="text-center font-sans lg:text-5xl lg:mb-36">
-            <h1 className="text-5xl">Seja bem-vindo, este é meu</h1>
-            <h1 className="font-bold text-4xl">Sistema de autenticação</h1>
-          </div>
-          <div className="flex justify-center">
-            <img
-              src="/undraw_login_re_4vu2 1.svg"
-              alt="unDraw image"
-              className="px-24"
-            />
-          </div>
-        </div>
+        {/*componente banner da imagem com o layout */}
+        <BannerInicial
+          src="/undraw_login_re_4vu2 1.svg"
+          alt="unDraw image"
+          className="px-24"
+        />
+        
         <div className="w-1/2 bg-secundaria h-full flex flex-col items-center justify-center">
           <div className="w-full px-8 md:px-16 text-textow">
             <h2 className="lg:text-5xl font-bold font-serat">LOGIN</h2>

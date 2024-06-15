@@ -25,7 +25,7 @@ const MensagemCard: React.FC<MensagemCardProps> = ({ sucesso, mensagem }) => {
   // Renderiza o componente com base no sucesso e na visibilidade
   return (
     <div
-      className={`fixed bottom-4 right-4 z-50 p-4 rounded-md ${
+      className={`fixed bottom-4 right-4 z-50 p-4 ml-4 rounded-md ${
         sucesso ? "bg-green-500" : "bg-red-500" //se for sucesso verde se nao vermelho
       } ${isVisible ? "block" : "hidden"}`}
     >

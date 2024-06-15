@@ -63,7 +63,7 @@ function LoginMobile() {
         <div className="flex justify-between mx-4 mt-8">
         <h2 className="text-5xl font-bold text-textod">LOGIN</h2>
         <img
-          src="/public/Lock.svg"
+          src="/Lock.svg"
           alt="unDraw image"
           className=""
         />
