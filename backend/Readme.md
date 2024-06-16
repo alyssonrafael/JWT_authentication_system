@@ -153,6 +153,7 @@ ele retornara um token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZT
 | <kbd>PATCH/http://localhost:3333/api/users/:id/role</kbd> | altera a Role do usuario restrito ao admin [response details](#PATCH-role)                 |
 | <kbd>PUT/http://localhost:3333/api/users/:id</kbd>        | atualização do nome todos tem acesso [response details](#put-users)                        |
 | <kbd>DELETE/http://localhost:3333/api/users/:id</kbd>     | Exclusão de usuario todos tem acesso                                                       |
+| <kbd>GET/http://localhost:3333/api/users/:id</kbd>        | Buscar usuario com base no id                                                              |
 
 <h3 id="get-user">GET api/users</h3>
 

@@ -1,5 +1,5 @@
 const express = require("express");
-const { updateUser, deleteUser, listUsers, changeUserRole } = require("../controllers/userController");
+const { updateUser, deleteUser, listUsers, changeUserRole, getUserById } = require("../controllers/userController");
 const authenticateJWT = require("../middlewares/authenticateJWT");
 
 const router = express.Router();
@@ -15,5 +15,8 @@ router.get("/users", authenticateJWT, listUsers);
 
 // Rota para modificar a role de um usuário (restrito ao ADMIN)
 router.patch("/users/:userId/role", authenticateJWT, changeUserRole);
+
+//Rota para obter detalhes do usuário pelo ID
+router.get('/user/:id', getUserById);
 
 module.exports = router;
