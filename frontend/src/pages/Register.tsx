@@ -12,14 +12,42 @@ const Register: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [mensagem, setMensagem] = useState({ sucesso: false, texto: "" });
   const [mensagemCount, setMensagemCount] = useState(0);
-  // Instanciação do hook useNavigate para permitir a navegação entre as páginas.
   const navigate = useNavigate();
 
   // Função assíncrona que lida com o evento de submissão do formulário de registro.
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    // mensagem para solicitar preenchimento dos campos
+    if (password === "" || confirmPassword === "" || email === "" || name === "") {
+      setMensagem({ sucesso: false, texto: "" });
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "Preencha todos os campos",
+      });
+      return;
+    }
+    //tamanho da senha
+    if (password.length < 6) {
+      setMensagem({
+        sucesso: false,
+        texto: "A senha deve ter pelo menos 6 caracteres.",
+      });
+      return;
+    }
+    // confirmaçao da senha
+    if (password !== confirmPassword) {
+      setMensagem({ sucesso: false, texto: "" });
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "As senhas não estão iguais",
+      });
+      return;
+    }
 
     setMensagem({ sucesso: false, texto: "" });
     setMensagemCount(mensagemCount + 1);
@@ -45,7 +73,7 @@ const Register: React.FC = () => {
         setMensagem({
           sucesso: false,
           texto:
-            "Não foi possivel realizar seu cadastro. Por favor, use outro email.",
+            "Não foi possível realizar seu cadastro. Por favor, use outro email.",
         });
       } else {
         //se nao ele manda um erro generico
@@ -76,13 +104,12 @@ const Register: React.FC = () => {
           alt="unDraw image"
           className="px-24"
         />
-
         <div className="w-1/2 bg-secundaria h-full flex flex-col items-center justify-center">
           <div className="w-full px-8 md:px-16 text-textow">
             <h2 className="lg:text-5xl font-bold font-serat">Sign-Up</h2>
             <p className="mt-8 mb-6 lg:text-xl">
               Faça agora mesmo seu cadastro. <br /> Para sua privacidade faça o
-              cadastro com dados ficticios.
+              cadastro com dados fictícios.
             </p>
             {/* Formulário de registro */}
             <form
@@ -97,7 +124,6 @@ const Register: React.FC = () => {
                   value={name}
                   className="w-full"
                   onChange={(e) => setName(e.target.value)}
-                  required={true}
                 />
               </div>
               <div className="mb-4">
@@ -108,10 +134,9 @@ const Register: React.FC = () => {
                   value={email}
                   className="w-full"
                   onChange={(e) => setEmail(e.target.value)}
-                  required={true}
                 />
               </div>
-              <div className="mb-6">
+              <div className="mb-4">
                 <label className="block lg:text-xl">Senha:</label>
                 <Input
                   type="password"
@@ -119,7 +144,16 @@ const Register: React.FC = () => {
                   value={password}
                   className="w-full"
                   onChange={(e) => setPassword(e.target.value)}
-                  required={true}
+                />
+              </div>
+              <div className="mb-6">
+                <label className="block lg:text-xl">Confirmar Senha:</label>
+                <Input
+                  type="password"
+                  placeholder="Confirme sua senha"
+                  value={confirmPassword}
+                  className="w-full"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
               <button

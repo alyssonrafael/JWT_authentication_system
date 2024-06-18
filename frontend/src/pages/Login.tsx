@@ -19,6 +19,18 @@ const Login: React.FC = () => {
   // Função assíncrona que lida com o evento de submissão do formulário de login.
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário.
+    // mensagem para solicitar preenchimento dos campos
+    if (password === "" || email === "") {
+      // Redefina a mensagem
+      setMensagem({ sucesso: false, texto: "" });
+      // Incrementa o contador de mensagens forçando ela a aparecer
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "Preencha todos os campos.",
+      });
+      return;
+    }
 
     // Redefina a mensagem
     setMensagem({ sucesso: false, texto: "" });
@@ -65,7 +77,7 @@ const Login: React.FC = () => {
           alt="unDraw image"
           className="px-24"
         />
-        
+
         <div className="w-1/2 bg-secundaria h-full flex flex-col items-center justify-center">
           <div className="w-full px-8 md:px-16 text-textow">
             <h2 className="lg:text-5xl font-bold font-serat">LOGIN</h2>
@@ -83,7 +95,6 @@ const Login: React.FC = () => {
                   value={email}
                   className="w-full"
                   onChange={(e) => setEmail(e.target.value)}
-                  required={true}
                 />
               </div>
               <div className="mb-6">
@@ -94,7 +105,6 @@ const Login: React.FC = () => {
                   value={password}
                   className="w-full"
                   onChange={(e) => setPassword(e.target.value)}
-                  required={true}
                 />
               </div>
               <button

@@ -6,7 +6,6 @@ import MensagemCard from "../../components/Message";
 import Input from "../../components/Input";
 
 function LoginMobile() {
-
   // Criação de estados para armazenar o email e senha do usuário.
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +17,16 @@ function LoginMobile() {
   // Função assíncrona que lida com o evento de submissão do formulário de login.
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário.
-
+    // mensagem para solicitar preenchimento dos campos
+    if (password === "" || email === ""){
+      setMensagem({ sucesso: false, texto: "" });
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "Preencha todos os campos",
+      });
+      return;
+    }
     // Redefina a mensagem
     setMensagem({ sucesso: false, texto: "" });
     // Incrementa o contador de mensagens forçando ela a aparecer
@@ -50,64 +58,54 @@ function LoginMobile() {
     }
   };
   return (
-
     <div className="h-screen bg-primaria text-white flex flex-col">
       {/* Cabeçalho com ícone de volta e título */}
       <div className="py-4 h-1/5">
-      <div className="m-4 text-3xl">
-        {/* volta para o / que exibe a home do mobile ou login se tiver em telas grandes */}
-        <Link to="/" className="text-textod">
-          <FaArrowLeft/>
-        </Link>
+        <div className="m-4 text-3xl">
+          {/* volta para o / que exibe a home do mobile ou login se tiver em telas grandes */}
+          <Link to="/" className="text-textod">
+            <FaArrowLeft />
+          </Link>
         </div>
-        <div className="flex justify-between mx-4 mt-8">
-        <h2 className="text-5xl font-bold text-textod">LOGIN</h2>
-        <img
-          src="/Lock.svg"
-          alt="unDraw image"
-          className=""
-        />
+        <div className="flex justify-between mx-4 ">
+          <h2 className="text-5xl font-bold text-textod">LOGIN</h2>
+          <img src="/Lock.svg" alt="unDraw image" />
         </div>
       </div>
 
       {/* Formulário de Login */}
-      <div className="flex flex-col h-4/5 bg-secundaria rounded-t-[14px] p-4">
+      <div className="flex justify-center h-4/5 bg-secundaria rounded-t-[14px] p-4">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold my-8">Seja bem-vindo de volta</h1>
 
-          <form
-              onSubmit={handleLogin}
-              className="w-full max-w-sm md:max-w-md"
+          <form onSubmit={handleLogin} className="w-full max-w-sm md:max-w-md">
+            <div className="mb-4">
+              <label className="block lg:text-xl">Email:</label>
+              <Input
+                type="email"
+                placeholder="Digite seu email"
+                value={email}
+                className="w-full"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block lg:text-xl">Senha:</label>
+              <Input
+                type="password"
+                placeholder="Digite sua senha"
+                value={password}
+                className="w-full"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-primaria text-textod rounded h-10 font-semibold"
             >
-              <div className="mb-4">
-                <label className="block lg:text-xl">Email:</label>
-                <Input
-                  type="email"
-                  placeholder="Digite seu email"
-                  value={email}
-                  className="w-full"
-                  onChange={(e) => setEmail(e.target.value)}
-                  required={true}
-                />
-              </div>
-              <div className="mb-6">
-                <label className="block lg:text-xl">Senha:</label>
-                <Input
-                  type="password"
-                  placeholder="Digite sua senha"
-                  value={password}
-                  className="w-full"
-                  onChange={(e) => setPassword(e.target.value)}
-                  required={true}
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-primaria text-textod rounded h-10 font-semibold"
-              >
-                  Login
-              </button>
-            </form>
+              Login
+            </button>
+          </form>
 
           <div className="mt-6 ">
             <p>

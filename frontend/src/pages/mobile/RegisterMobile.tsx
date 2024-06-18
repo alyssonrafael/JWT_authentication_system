@@ -10,6 +10,7 @@ function RegisterMobile() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [mensagem, setMensagem] = useState({ sucesso: false, texto: "" });
   const [mensagemCount, setMensagemCount] = useState(0);
   // Instanciação do hook useNavigate para permitir a navegação entre as páginas.
@@ -18,6 +19,36 @@ function RegisterMobile() {
   // Função assíncrona que lida com o evento de submissão do formulário de registro.
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    // mensagem para solicitar preenchimento dos campos 
+    if (password === "" || confirmPassword === "" || email === "" || name === "")  {
+      setMensagem({ sucesso: false, texto: "" });
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "Preencha todos os campos",
+      });
+      return;
+    }
+    //tamanho da senha
+    if (password.length < 6) {
+      setMensagem({ sucesso: false, texto: "" });
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "A senha deve ter pelo menos 6 caracteres.",
+      });
+      return;
+    }
+    // confirmaçao da senha
+    if (password !== confirmPassword) {
+      setMensagem({ sucesso: false, texto: "" });
+      setMensagemCount(mensagemCount + 1);
+      setMensagem({
+        sucesso: false,
+        texto: "As senhas não estão iguais",
+      });
+      return;
+    }
     // forçando mensagem a ser exibida
     setMensagem({ sucesso: false, texto: "" });
     setMensagemCount(mensagemCount + 1);
@@ -70,14 +101,14 @@ function RegisterMobile() {
             <FaArrowLeft />
           </Link>
         </div>
-        <div className="flex justify-between mx-4 mt-8">
+        <div className="flex justify-between mx-4">
           <h2 className="text-5xl font-bold text-textod">Sing-up</h2>
           <img src="/Lock.svg" alt="unDraw image" className="" />
         </div>
       </div>
 
       {/* Formulário de registro */}
-      <div className="flex flex-col h-4/5 bg-secundaria rounded-t-[14px] p-4">
+      <div className="flex  justify-center h-4/5 bg-secundaria rounded-t-[14px] p-4">
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold mt-8">
             Faça agora mesmo seu cadastro
@@ -98,7 +129,6 @@ function RegisterMobile() {
                 value={name}
                 className="w-full"
                 onChange={(e) => setName(e.target.value)}
-                required={true}
               />
             </div>
             <div className="mb-4">
@@ -109,7 +139,6 @@ function RegisterMobile() {
                 value={email}
                 className="w-full"
                 onChange={(e) => setEmail(e.target.value)}
-                required={true}
               />
             </div>
             <div className="mb-6">
@@ -120,7 +149,16 @@ function RegisterMobile() {
                 value={password}
                 className="w-full"
                 onChange={(e) => setPassword(e.target.value)}
-                required={true}
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block lg:text-xl">Confirmar Senha:</label>
+              <Input
+                type="password"
+                placeholder="Confirme sua senha"
+                value={confirmPassword}
+                className="w-full"
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
             <button
