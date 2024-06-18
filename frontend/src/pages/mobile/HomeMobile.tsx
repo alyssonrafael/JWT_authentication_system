@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";//importaçaao do llink para poder navegar para outras paginas
+import React from "react";
+import { Link } from "react-router-dom";
 
-function HomeMobile() {
+const HomeMobile: React.FC = () => {
   return (
-    <div className="flex flex-col h-screen px-4">
+    <div className="flex flex-col h-screen px-4 overflow-y-auto">
       {/* Imagem na parte superior, ocupando 1/3 da tela */}
-      <div className="flex justify-center items-center h-1/3 w-full my-8 ">
+      <div className="flex justify-center items-center h-1/3 w-full my-8">
         <img
           src="/undraw_two_factor_authentication_namy 1.svg"
           alt="unDraw image"
@@ -19,23 +20,24 @@ function HomeMobile() {
             Este é meu sistema de autenticação
           </h2>
         </div>
-        {/* botoes de liks para as paginas mobile de login e cadastro  */}
+        {/* Botões de links para as páginas mobile de login e cadastro */}
         <div className="flex flex-col space-y-10 pt-10 font-medium">
           <Link
             to="/login-mobile"
-            className="bg-white  py-2 px-4 rounded-full shadow text-center"
+            className="bg-white py-2 px-4 rounded-full shadow text-center"
           >
             Login
           </Link>
           <Link
             to="/register-mobile"
-            className="bg-white  py-2 px-4 rounded-full shadow text-center"
+            className="bg-white py-2 px-4 rounded-full shadow text-center"
           >
             Cadastrar nova conta
           </Link>
         </div>
       </div>
-      <footer className=" text-textow text-center underline underline-offset-4 pb-4 font-light">
+      {/* Rodapé */}
+      <footer className="text-textow text-center underline underline-offset-4 py-4 font-light">
         <a
           href="https://github.com/alyssonrafael/JWT_authentication_system"
           target="_blank"
@@ -46,6 +48,6 @@ function HomeMobile() {
       </footer>
     </div>
   );
-}
+};
 
 export default HomeMobile;

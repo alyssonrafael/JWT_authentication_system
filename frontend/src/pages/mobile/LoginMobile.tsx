@@ -58,27 +58,27 @@ function LoginMobile() {
     }
   };
   return (
-    <div className="h-screen bg-primaria text-white flex flex-col">
+    <div className="min-h-screen bg-primaria text-white flex flex-col">
       {/* Cabeçalho com ícone de volta e título */}
       <div className="py-4 h-1/5">
         <div className="m-4 text-3xl">
-          {/* volta para o / que exibe a home do mobile ou login se tiver em telas grandes */}
+          {/* Link de volta */}
           <Link to="/" className="text-textod">
             <FaArrowLeft />
           </Link>
         </div>
         <div className="flex justify-between mx-4 ">
           <h2 className="text-5xl font-bold text-textod">LOGIN</h2>
-          <img src="/Lock.svg" alt="unDraw image" />
+          <img src="/Lock.svg" alt="Lock icon" />
         </div>
       </div>
 
       {/* Formulário de Login */}
-      <div className="flex justify-center h-4/5 bg-secundaria rounded-t-[14px] p-4">
-        <div className="flex flex-col">
+      <div className="flex flex-1 justify-center bg-secundaria rounded-t-[14px] p-4">
+        <div className="flex flex-col w-full max-w-sm md:max-w-md">
           <h1 className="text-2xl font-bold my-8">Seja bem-vindo de volta</h1>
 
-          <form onSubmit={handleLogin} className="w-full max-w-sm md:max-w-md">
+          <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label className="block lg:text-xl">Email:</label>
               <Input
@@ -107,7 +107,7 @@ function LoginMobile() {
             </button>
           </form>
 
-          <div className="mt-6 ">
+          <div className="mt-6">
             <p>
               Quer saber mais sobre esse projeto?
               <a

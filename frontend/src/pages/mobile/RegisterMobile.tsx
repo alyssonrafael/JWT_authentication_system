@@ -92,35 +92,30 @@ function RegisterMobile() {
     }
   };
   return (
-    <div className="h-screen bg-primaria text-white flex flex-col">
+    <div className="min-h-screen bg-primaria text-white flex flex-col">
       {/* Cabeçalho com ícone de volta e título */}
       <div className="py-4 h-1/5">
         <div className="m-4 text-3xl">
-          {/* volta para o / que exibe a home do mobile ou login se tiver em telas grandes */}
+          {/* Link de volta */}
           <Link to="/" className="text-textod">
             <FaArrowLeft />
           </Link>
         </div>
         <div className="flex justify-between mx-4">
           <h2 className="text-5xl font-bold text-textod">Sing-up</h2>
-          <img src="/Lock.svg" alt="unDraw image" className="" />
+          <img src="/Lock.svg" alt="Lock icon" className="" />
         </div>
       </div>
 
       {/* Formulário de registro */}
-      <div className="flex  justify-center h-4/5 bg-secundaria rounded-t-[14px] p-4">
-        <div className="flex flex-col">
+      <div className="flex flex-1 justify-center bg-secundaria rounded-t-[14px] p-4">
+        <div className="flex flex-col w-full max-w-sm md:max-w-md">
           <h1 className="text-2xl font-bold mt-8">
             Faça agora mesmo seu cadastro
           </h1>
-          <p className="mb-8">
-            Para sua privacidade faça o cadastro com dados ficticios.{" "}
-          </p>
+          <p className="mb-8">Para sua privacidade, faça o cadastro com dados fictícios.</p>
 
-          <form
-            onSubmit={handleRegister}
-            className="w-full max-w-sm md:max-w-md"
-          >
+          <form onSubmit={handleRegister}>
             <div className="mb-4">
               <label className="block lg:text-xl">Nome:</label>
               <Input
@@ -165,7 +160,7 @@ function RegisterMobile() {
               type="submit"
               className="w-full bg-primaria text-textod rounded h-10 font-semibold"
             >
-              Login
+              Cadastrar
             </button>
           </form>
         </div>
