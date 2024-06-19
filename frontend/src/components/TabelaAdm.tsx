@@ -16,6 +16,12 @@ export interface User {
   role: "USER" | "ADMIN";
 }
 
+// IDs dos usuários protegidos
+const PROTECTED_USER_IDS = [
+  "04c45ff2-5548-4478-8238-4e6d5a4fc3f7",
+  "28e4bdb9-0b0e-4abe-ae3a-e17718d1ebd1",
+];
+
 const TabelaAdm: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]); // Estado para armazenar os usuários
   const [searchTerm, setSearchTerm] = useState<string>(""); // Estado para o termo de busca
@@ -54,6 +60,19 @@ const TabelaAdm: React.FC = () => {
   };
   // Função para deletar um usuário
   const deleteUser = async (userId: string) => {
+    // Redefina a mensagem
+    setMensagem({ sucesso: false, texto: "" });
+    // Incrementa o contador de mensagens forçando ela a aparecer
+    setMensagemCount(mensagemCount + 1);
+    // Verifica se o usuário a ser deletado está na lista de protegidos
+    if (PROTECTED_USER_IDS.includes(userId)) {
+      setMensagem({
+        sucesso: false,
+        texto: "Este usuário não pode ser excluído.",
+      });
+      return;
+    }
+
     try {
       await axiosInstance.delete(`/users/${userId}`);
       // Filtrar usuários e atualizar o estado

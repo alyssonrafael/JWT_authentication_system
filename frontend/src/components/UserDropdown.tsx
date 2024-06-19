@@ -13,6 +13,12 @@ interface ApiResponse {
   role: "USER" | "ADMIN";
 }
 
+// IDs dos usuários protegidos
+const PROTECTED_USER_IDS = [
+  "04c45ff2-5548-4478-8238-4e6d5a4fc3f7",
+  "28e4bdb9-0b0e-4abe-ae3a-e17718d1ebd1",
+];
+
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false); // Estado para controlar se o dropdown está aberto
   const [isEditing, setIsEditing] = useState<boolean>(false); // Estado para controlar se está no modo de edição
@@ -128,10 +134,26 @@ const UserDropdown = () => {
 
   // Função para excluir a conta do usuário
   const handleDeleteAccount = () => {
+    // Redefine a mensagem
+    setMensagem({ sucesso: false, texto: "" });
+    // Incrementa o contador de mensagens forçando ela a aparecer
+    setMensagemCount(mensagemCount + 1);
+    
     const token = localStorage.getItem("token");
     if (token) {
       const decoded = decodeToken(token);
-      if (decoded) {
+      if (decoded && user) {
+        // Verifica se o usuário atual é protegido
+        if (PROTECTED_USER_IDS.includes(user.id)) {
+          setMensagem({
+            sucesso: false,
+            texto: "Este usuário não pode ser excluído.",
+          });
+          setMensagemCount(mensagemCount + 1);
+          setIsConfirmingDelete(false);
+          return;
+        }
+
         axios
           .delete(`https://jwt-authentication-system-back.vercel.app/api/users/${decoded.userId}`, {
             headers: {
@@ -142,15 +164,15 @@ const UserDropdown = () => {
             // Define a mensagem de sucesso
             setMensagem({
               sucesso: true,
-              texto: "Conta excluída com sucesso você sera redirecionado",
+              texto: "Conta excluída com sucesso",
             });
             setMensagemCount(mensagemCount + 1);
-            // Usa setTimeout para redirecionar após 3 segundos para ter um feddback que realmente foi excluido
+            // Usa setTimeout para redirecionar após 3 segundos
             setTimeout(() => {
               localStorage.removeItem("token"); // Remove o token do localStorage
               setUser(null); // Remove o usuário do estado
               navigate("/"); // Navega para a página de login
-            }, 3000);
+            }, 3000); // 3 segundos de espera
           })
           .catch((error) => {
             console.error("Erro ao excluir conta:", error);
@@ -279,7 +301,10 @@ const UserDropdown = () => {
       {isConfirmingDelete && (
         <div className="fixed inset-0 flex items-center justify-center z-50 mx-6">
           <div className="bg-white rounded-md shadow-lg p-4 text-textod">
-            <p className="mb-4">Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.</p>
+            <p className="mb-4">
+              Tem certeza que deseja excluir sua conta? Esta ação não pode ser
+              desfeita.
+            </p>
             <div className="flex space-x-2">
               <button
                 onClick={handleDeleteAccount}
