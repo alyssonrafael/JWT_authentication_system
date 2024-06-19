@@ -1,52 +1,41 @@
-const { PrismaClient } = require('@prisma/client');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const hashPassword = require('../utils/hashPassword');
+const express = require("express");
+const  { register, login } = require("../controllers/authController");
+const authenticateJWT = require("../middlewares/authenticateJWT");
+const checkDuplicateEmail = require('../middlewares/checkDuplicateEmail');
+// Criação de um novo roteador Express
+const router = express.Router();
 
-const prisma = new PrismaClient();
-const secretKey = process.env.SECRET_KEY;
+// Rota POST para registro de usuários
+// Quando a rota '/register' é acessada, a função 'register' é chamada e passa pelo middleware
+router.post("/register",checkDuplicateEmail, register);
 
-const register = async (req, res) => {
-  const { name, email, password, role } = req.body;
-  const hashedPassword = await hashPassword(password);
+// Rota POST para login de usuários
+// Quando a rota '/login' é acessada, a função 'login' é chamada
+router.post("/login", login);
 
-  console.log(`Register request: ${JSON.stringify(req.body)}`);
-
-  try {
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role
-      }
-    });
-    res.status(201).json(user);
-  } catch (error) {
-    console.error('Error during registration:', error);
-    res.status(400).json({ error: error.message });
+// Rota GET para o painel do usuário
+// A função 'authenticateJWT' é usada como middleware para verificar se o usuário está autenticado
+// Se o usuário tiver a role 'USER', ele terá acesso ao painel do usuário
+router.get("/user-dashboard", authenticateJWT, (req, res) => {
+  if (req.user.role === "USER") {
+    // Resposta com uma mensagem de boas-vindas ao painel do usuário
+    res.json({ message: "Welcome to the user dashboard!" });
+  } else {
+    // Se o usuário não tiver a role 'USER', ele receberá um status 403 (Proibido)
+    res.sendStatus(403);
   }
-};
-
-const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  console.log(`Login request: ${JSON.stringify(req.body)}`);
-
-  try {
-    const user = await prisma.user.findUnique({ where: { email } });
-
-    if (user && await bcrypt.compare(password, user.password)) {
-      const token = jwt.sign({ userId: user.id, role: user.role }, secretKey, { expiresIn: '1h' });
-      res.json({ token, role: user.role });
-    } else {
-      console.error('Invalid email or password');
-      res.status(401).json({ error: 'Invalid email or password' });
-    }
-  } catch (error) {
-    console.error('Error during login:', error);
-    res.status(400).json({ error: error.message });
+});
+// Rota GET para o painel do administrador
+// A função 'authenticateJWT' é usada como middleware para verificar se o usuário está autenticado
+// Se o usuário tiver a role 'ADMIN', ele terá acesso ao painel do administrador
+router.get("/admin-dashboard", authenticateJWT, (req, res) => {
+  if (req.user.role === "ADMIN") {
+    // Resposta com uma mensagem de boas-vindas ao painel do administrador
+    res.json({ message: "Welcome to the admin dashboard!" });
+  } else {
+    // Se o usuário não tiver a role 'ADMIN', ele receberá um status 403 (Proibido)
+    res.sendStatus(403);
   }
-};
+});
 
-module.exports = { register, login };
+module.exports = router;
