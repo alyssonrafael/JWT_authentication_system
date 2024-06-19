@@ -28,7 +28,7 @@ const TabelaAdm: React.FC = () => {
 
   // Configurar Axios com o token
   const axiosInstance = axios.create({
-    baseURL: "http://localhost:3333/api",
+    baseURL: "https://jwt-authentication-system-back.vercel.app/api",
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -34,7 +34,7 @@ function LoginMobile() {
 
     try {
       // Realiza uma requisição POST para a API de login com o email e senha.
-      const response = await axios.post("http://localhost:3333/api/login", {
+      const response = await axios.post("https://jwt-authentication-system-back.vercel.app/api/login", {
         email,
         password,
       });

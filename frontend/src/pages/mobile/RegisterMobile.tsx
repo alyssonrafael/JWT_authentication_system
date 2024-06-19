@@ -54,7 +54,7 @@ function RegisterMobile() {
     setMensagemCount(mensagemCount + 1);
 
     try {
-      await axios.post("http://localhost:3333/api/register", {
+      await axios.post("https://jwt-authentication-system-back.vercel.app/api/register", {
         name,
         email,
         password,

@@ -34,7 +34,7 @@ const UserDropdown = () => {
       if (decoded) {
         // Faz uma requisição GET para obter os dados do usuário usando o ID decodificado
         axios
-          .get<ApiResponse>(`http://localhost:3333/api/user/${decoded.userId}`)
+          .get<ApiResponse>(`https://jwt-authentication-system-back.vercel.app/api/user/${decoded.userId}`)
           .then((response: AxiosResponse<ApiResponse>) => {
             const { id, name, email, role } = response.data; // Extrai dados do usuário da resposta
             setUser({ id, name, email, role }); // Atualiza o estado com os dados do usuário
@@ -79,7 +79,7 @@ const UserDropdown = () => {
         if (decoded) {
           axios
             .put<ApiResponse>(
-              `http://localhost:3333/api/users/${decoded.userId}`,
+              `https://jwt-authentication-system-back.vercel.app/api/users/${decoded.userId}`,
               { name: newName },
               {
                 headers: {
@@ -133,7 +133,7 @@ const UserDropdown = () => {
       const decoded = decodeToken(token);
       if (decoded) {
         axios
-          .delete(`http://localhost:3333/api/users/${decoded.userId}`, {
+          .delete(`https://jwt-authentication-system-back.vercel.app/api/users/${decoded.userId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
